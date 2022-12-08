@@ -12,7 +12,9 @@ var = ''
 last_name_initial_var = ''
 
 #####################################################
-
+# TODO: add words to a level section: create an excel file or even txt file where words per level will be saved - link it with a function to GUI
+# TODO: gaming section: 
+# TODO: languages?
 
 ##################################  FUNCTIONS  ##################################################
 
@@ -66,18 +68,25 @@ data_menu = Menu(menubar, tearoff=False) #first_lineises new submenu
 
 
 action_menu = Menu(menubar, tearoff=False) #first_lineises new submenu
-menubar.add_cascade(label='Actions', menu=action_menu) #creates name of new submenu
-metrics_menu = Menu(action_menu, tearoff=False)
-metrics_menu.add_command(label='1', command=function) #adds option to submenu
-action_menu.add_cascade(label='1', menu=metrics_menu) #creates name of new submenu
+menubar.add_cascade(label='New Game', menu=action_menu) #creates name of new submenu
+level_menu = Menu(action_menu, tearoff=False)
+level_menu.add_command(label='A1', command=function) #adds option to submenu
+level_menu.add_command(label='A2', command=function) #adds option to submenu
+level_menu.add_command(label='B1', command=function) #adds option to submenu
+level_menu.add_command(label='B2', command=function) #adds option to submenu
+level_menu.add_command(label='C1', command=function) #adds option to submenu
+level_menu.add_command(label='C2', command=function) #adds option to submenu
+action_menu.add_cascade(label='Choose Level', menu=level_menu) #creates name of new submenu
+action_menu.add_command(label='Show Words Per Level', command=function) #  main update_itineraries
 
-action_menu.add_command(label='1', command=function) #  main update_itineraries
-action_menu.add_command(label='2', command=function) #  main update_itineraries
-
-plto_menu = Menu(action_menu, tearoff=False)
-# plto_menu.add_command(label='Update PLTOs', command=PLTOs) #adds option to submenu
-plto_menu.add_command(label='1', command=function) #adds option to submenu
-action_menu.add_cascade(label='1', menu=plto_menu) #creates name of new submenu
+add_words_menu = Menu(action_menu, tearoff=False)
+add_words_menu.add_command(label='A1', command=function) #adds option to submenu
+add_words_menu.add_command(label='A2', command=function) #adds option to submenu
+add_words_menu.add_command(label='B1', command=function) #adds option to submenu
+add_words_menu.add_command(label='B2', command=function) #adds option to submenu
+add_words_menu.add_command(label='C1', command=function) #adds option to submenu
+add_words_menu.add_command(label='C2', command=function) #adds option to submenu
+action_menu.add_cascade(label='Add Words to a Level', menu=add_words_menu) #creates name of new submenu
 
 advice_menu = Menu(menubar, tearoff=False) #first_lineises new submenu
 menubar.add_cascade(label='Advice', menu=advice_menu) #creates name of new submenu
