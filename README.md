@@ -1,4 +1,6 @@
 # hangman_for_teachers
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+
 Hangman game for teachers with difficulties according to level of learning with TKinter graphics.
 
 It creates an Excel file where the user can add words by difficulty.
