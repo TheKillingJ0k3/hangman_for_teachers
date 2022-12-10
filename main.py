@@ -11,9 +11,13 @@ import os, shutil
 #GLOBAL VARIABLES
 # var = ''
 # last_name_initial_var = ''
+level_selected = ''
+number_of_letters = ''
+attempts = ''
 
 #####################################################
-# TODO: gaming section: 
+# TODO: gaming section: player chooses level, words of this level are saved in a list, program chooses randomly a word from this list, game begins
+# TODO: exclude articles from the above
 # TODO: languages?
 
 ##################################  FUNCTIONS  ##################################################
@@ -63,7 +67,8 @@ def open_excel(excel_file_path):
 def show_words():
     os.startfile(r".\\Hangman Excel\\Hangman Excel.xlsx") # , data_only=True in case file has a lot of formulas
 
-
+def select_level(): #connect selection in GUI with a variable
+    pass
 
 def function():
     pass
@@ -91,6 +96,7 @@ root.title('Hangman')
 root.geometry('500x350')
 # root.state('zoomed')
 # root.option_add('*tear0ff', False) #opens fullscreen
+# root.iconbitmap('.\\hangman.ico')
 
 # background_image = PhotoImage(file='C:\\Users\\kj\\Documents\\Python Projects\\Comic downloader\\crowd-img.png')
 # background_label = Label(root, image=background_image)
