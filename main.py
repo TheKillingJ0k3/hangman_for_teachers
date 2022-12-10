@@ -3,16 +3,16 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-from openpyxl import *
+import openpyxl
+from openpyxl.styles import Font, Border, Side
 import os, shutil
 
 
 #GLOBAL VARIABLES
-var = ''
-last_name_initial_var = ''
+# var = ''
+# last_name_initial_var = ''
 
 #####################################################
-# TODO: add words to a level section: create an excel file or even txt file where words per level will be saved - link it with a function to GUI
 # TODO: gaming section: 
 # TODO: languages?
 
@@ -26,7 +26,44 @@ def createFolder(path):
     except OSError:
         print('Error creating directory' + path)
 
+################## styles ##################
+def excel_styles(excel_sheet):
+    Arial_11_Font = Font(name='Arial', size=11)
+
+    Arial_11_bold_Font = Font(name='Arial', size=11, bold=True)
+    for columnNum in range(1, excel_sheet.max_column + 1):
+        excel_sheet.cell(row=1, column=columnNum).font = Arial_11_bold_Font
+    excel_sheet.freeze_panes = 'A2'
+############################################
+
+def open_excel(excel_file_path):
+    try:
+        wb = openpyxl.load_workbook(excel_file_path, data_only=True) # , data_only=True in case file has a lot of formulas
+        ws = wb.active
+    except FileNotFoundError:
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws['A1'] = 'A1' # or cell.value = skata
+        ws.column_dimensions['A'].width = 22.43
+        ws['B1'] =  'A2'
+        ws.column_dimensions['B'].width = 22.43
+        ws['C1'] =  'B1'
+        ws.column_dimensions['C'].width = 22.43
+        ws['D1'] =  'B2'
+        ws.column_dimensions['D'].width = 22.43
+        ws['E1'] =  'C1'
+        ws.column_dimensions['E'].width = 22.43
+        ws['F1'] =  'C2'
+        ws.column_dimensions['F'].width = 22.43
+        excel_styles(ws)
+    wb.save(excel_file_path)
+    return wb, ws
+
 ######################################################
+def show_words():
+    os.startfile(r".\\Hangman Excel\\Hangman Excel.xlsx") # , data_only=True in case file has a lot of formulas
+
+
 
 def function():
     pass
@@ -41,7 +78,12 @@ def function1():
 # # as an example, this function is used in last_name_initial_submit
 # # when user writes last name and presses submit, script prints var's value
 
+
 #############################################################################################
+createFolder('.\\Hangman Excel')
+wb, ws = open_excel('.\\Hangman Excel\Hangman Excel.xlsx')
+
+
 
 ###################### main GUI - Button creation #########################################
 root = Tk()
@@ -77,16 +119,19 @@ level_menu.add_command(label='B2', command=function) #adds option to submenu
 level_menu.add_command(label='C1', command=function) #adds option to submenu
 level_menu.add_command(label='C2', command=function) #adds option to submenu
 action_menu.add_cascade(label='Choose Level', menu=level_menu) #creates name of new submenu
-action_menu.add_command(label='Show Words Per Level', command=function) #  main update_itineraries
 
-add_words_menu = Menu(action_menu, tearoff=False)
-add_words_menu.add_command(label='A1', command=function) #adds option to submenu
-add_words_menu.add_command(label='A2', command=function) #adds option to submenu
-add_words_menu.add_command(label='B1', command=function) #adds option to submenu
-add_words_menu.add_command(label='B2', command=function) #adds option to submenu
-add_words_menu.add_command(label='C1', command=function) #adds option to submenu
-add_words_menu.add_command(label='C2', command=function) #adds option to submenu
-action_menu.add_cascade(label='Add Words to a Level', menu=add_words_menu) #creates name of new submenu
+settings_menu = Menu(menubar, tearoff=False)
+menubar.add_cascade(label='Settings', menu=settings_menu) #creates name of new submenu
+settings_menu.add_command(label='Show Saved Words', command=show_words) #  main update_itineraries
+word_settings_menu = Menu(settings_menu, tearoff=False)
+settings_menu.add_cascade(label='Add Words to a Level', menu=word_settings_menu) #creates name of new submenu
+word_settings_menu.add_command(label='A1', command=function) #adds option to submenu
+word_settings_menu.add_command(label='A2', command=function) #adds option to submenu
+word_settings_menu.add_command(label='B1', command=function) #adds option to submenu
+word_settings_menu.add_command(label='B2', command=function) #adds option to submenu
+word_settings_menu.add_command(label='C1', command=function) #adds option to submenu
+word_settings_menu.add_command(label='C2', command=function) #adds option to submenu
+
 
 advice_menu = Menu(menubar, tearoff=False) #first_lineises new submenu
 menubar.add_cascade(label='Advice', menu=advice_menu) #creates name of new submenu
