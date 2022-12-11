@@ -77,6 +77,8 @@ def show_words():
 
 
 def start_game(level):
+    open_game_frame()
+    # Label.destroy()
     word_selected = None
     while word_selected == None:
         word_selected = ws.cell(row=(randint(2, ws.max_row)), column=int(levels_to_columns[level])).value
@@ -84,7 +86,10 @@ def start_game(level):
     hidden_word = word_selected.split()[1]
     hidden_word = word_selected.split()[0] + ' ' + word_selected.split()[1][0] + (len(hidden_word)-2)*'_ ' + word_selected.split()[1][-1]
     print(hidden_word)
-    return word_selected, hidden_word
+    tkinter_hidden_word.set(hidden_word)
+    print(tkinter_hidden_word)
+    Label(word_frame, textvariable=tkinter_hidden_word).pack(side = LEFT, anchor=W)
+    return word_selected, hidden_word, tkinter_hidden_word
 
 
 def play_game():
@@ -119,6 +124,20 @@ def start_level_C2():
 def function():
     pass
 
+def open_game_frame():
+    game_frame.pack_forget()
+    hangman_frame.pack_forget()
+    word_frame.pack_forget()
+    letter_frame.pack_forget()
+    game_frame.pack(side=LEFT, fill='both', expand=1) #  fill='both', expand=1
+    hangman_frame.pack(side=TOP)
+    word_frame.pack(side=BOTTOM) # 
+    # redbutton = Button(game_frame, text="Red", fg="red")
+    # redbutton.pack(side = LEFT)
+    letter_frame.pack(side=RIGHT)
+    # Label(word_frame, textvariable=hidden_word).pack()
+    frame.pack_forget()
+
 
 #############################################################################################
 createFolder('.\\Hangman Excel')
@@ -134,12 +153,19 @@ root.geometry('500x350')
 # root.option_add('*tear0ff', False) #opens fullscreen
 # root.iconbitmap('.\\hangman.ico')
 
+tkinter_hidden_word = StringVar()
+
 # background_image = PhotoImage(file='C:\\Users\\kj\\Documents\\Python Projects\\Comic downloader\\crowd-img.png')
 # background_label = Label(root, image=background_image)
 # background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
 frame = Frame(root, borderwidth=5, relief="sunken", width=500, height=500) # 100 -200
 frame.pack()
+
+game_frame = Frame(root, borderwidth=5, relief="sunken", width=350, height=350, bg='pink') # 100 -200
+hangman_frame = Frame(game_frame, borderwidth=5, relief="sunken", width=350, height=300) # 100 -200
+word_frame = Frame(game_frame, borderwidth=5, relief="sunken", width=350, height=150) # 100 -200
+letter_frame = Frame(root, borderwidth=5, relief="sunken", width=150, height=350, bg='yellow') # 100 -200
 
 ##############################   MENU  #############################################
 menubar = Menu(root) #creates menubar
