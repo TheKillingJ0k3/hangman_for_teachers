@@ -106,8 +106,11 @@ def select_letter(letter):
         # print(hidden_word)
     else:
         print("Try again!")
-    if word_selected == hidden_word:
+    print(word_selected.split())
+    print(hidden_word.split())
+    if ''.join(word_selected.split()) == ''.join(hidden_word.split()):
         print('Congratulations!')
+        messagebox.showinfo(title='Success!', message='Congratulations!')
     else:
         print('One more!')
     # return tkinter_letter_selected, tkinter_hidden_word, word_selected, hidden_word
@@ -122,7 +125,7 @@ def start_game(level):
     word_selected = None
     while word_selected == None:
         word_selected = ws.cell(row=(randint(2, ws.max_row)), column=int(levels_to_columns[level])).value
-    print(word_selected)
+    # print(word_selected)
     hidden_word = word_selected.split()[1]
     hidden_word = word_selected.split()[0] + ' ' + word_selected.split()[1][0] + ' ' + (len(hidden_word)-2)*'_ ' + word_selected.split()[1][-1]
     print(hidden_word)
