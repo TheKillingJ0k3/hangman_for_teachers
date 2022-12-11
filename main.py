@@ -87,19 +87,30 @@ def select_letter(letter):
     global hidden_word
     global tkinter_hidden_word
     tkinter_letter_selected = letter
-    print(hidden_word)
     if tkinter_letter_selected in word_selected:
         print("Nice!")
-        word_selected = list(word_selected.split()[1])
-        hidden_word = list(hidden_word.split()[1])
-        print(word_selected)
-        print(hidden_word)
-        for i in range(1,len(word_selected)-1):
+        article = (word_selected.split())[0]
+        word_selected = list(word_selected.split()[1]) # no article
+        hidden_word = (hidden_word.split())[1:]
+        # print(word_selected)
+        # print(hidden_word)
+        for i in range(1,len(word_selected)-1): #1, -1 because we don't care about first and last letter
             if tkinter_letter_selected == word_selected[i]:
                 hidden_word[i] = tkinter_letter_selected
-        print(hidden_word)
-        tkinter_hidden_word.set(''.join(hidden_word))
-    return tkinter_letter_selected, tkinter_hidden_word
+        # print(hidden_word)
+        tkinter_hidden_word.set(article + ' ' + ' '.join(hidden_word))
+        word_selected = article + ' ' + ''.join(word_selected)
+        hidden_word = article + ' ' + ' '.join(hidden_word)
+        tkinter_letter_selected = ''
+        # print(word_selected)
+        # print(hidden_word)
+    else:
+        print("Try again!")
+    if word_selected == hidden_word:
+        print('Congratulations!')
+    else:
+        print('One more!')
+    # return tkinter_letter_selected, tkinter_hidden_word, word_selected, hidden_word
 
 
 def start_game(level):
@@ -113,7 +124,7 @@ def start_game(level):
         word_selected = ws.cell(row=(randint(2, ws.max_row)), column=int(levels_to_columns[level])).value
     print(word_selected)
     hidden_word = word_selected.split()[1]
-    hidden_word = word_selected.split()[0] + ' ' + word_selected.split()[1][0] + (len(hidden_word)-2)*'_ ' + word_selected.split()[1][-1]
+    hidden_word = word_selected.split()[0] + ' ' + word_selected.split()[1][0] + ' ' + (len(hidden_word)-2)*'_ ' + word_selected.split()[1][-1]
     print(hidden_word)
     tkinter_hidden_word.set(hidden_word)
     Label(word_frame, textvariable=tkinter_hidden_word).pack(side = LEFT, anchor=W)
