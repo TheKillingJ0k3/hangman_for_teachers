@@ -12,6 +12,10 @@ import os, shutil
 #GLOBAL VARIABLES
 # var = ''
 # last_name_initial_var = ''
+word_selected = ''
+hidden_word = ''
+tkinter_letter_selected = ''
+tkinter_hidden_word = ''
 number_of_letters = ''
 attempts = ''
 english_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
@@ -26,8 +30,9 @@ levels_to_columns = {'A1':'1',
                     }
 
 #####################################################
-# TODO: play game function: display word on GUI + hangman - player chooses a letter, if correct, adds it to the word, if not burns an attempt 
+# TODO: play game function: display hangman - if letter correct, adds it to the word, if not burns an attempt 
 # TODO: one tab for each language
+# TODO: new game bugs GUI - board is not cleared correctly
 
 ##################################  FUNCTIONS  ##################################################
 
@@ -76,10 +81,33 @@ def open_excel(excel_file_path):
 def show_words():
     os.startfile(r".\\Hangman Excel\\Hangman Excel.xlsx") # , data_only=True in case file has a lot of formulas
 
+def select_letter(letter):
+    global tkinter_letter_selected
+    global word_selected
+    global hidden_word
+    global tkinter_hidden_word
+    tkinter_letter_selected = letter
+    print(hidden_word)
+    if tkinter_letter_selected in word_selected:
+        print("Nice!")
+        word_selected = list(word_selected.split()[1])
+        hidden_word = list(hidden_word.split()[1])
+        print(word_selected)
+        print(hidden_word)
+        for i in range(1,len(word_selected)-1):
+            if tkinter_letter_selected == word_selected[i]:
+                hidden_word[i] = tkinter_letter_selected
+        print(hidden_word)
+        tkinter_hidden_word.set(''.join(hidden_word))
+    return tkinter_letter_selected, tkinter_hidden_word
+
 
 def start_game(level):
     open_game_frame()
     # Label.destroy()
+    global word_selected
+    global hidden_word
+    global tkinter_hidden_word
     word_selected = None
     while word_selected == None:
         word_selected = ws.cell(row=(randint(2, ws.max_row)), column=int(levels_to_columns[level])).value
@@ -88,35 +116,37 @@ def start_game(level):
     hidden_word = word_selected.split()[0] + ' ' + word_selected.split()[1][0] + (len(hidden_word)-2)*'_ ' + word_selected.split()[1][-1]
     print(hidden_word)
     tkinter_hidden_word.set(hidden_word)
-    print(tkinter_hidden_word)
     Label(word_frame, textvariable=tkinter_hidden_word).pack(side = LEFT, anchor=W)
 
     if word_selected.split()[1][-2] in german_alphabet:
         for letter in german_alphabet: # maybe this should go to start_game, so that alphabet can be selected by the letters in selected word
             if german_alphabet.index(letter) < 6:
-                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 1,column=german_alphabet.index(letter), sticky=W)
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 1,column=german_alphabet.index(letter), sticky=W)
             elif german_alphabet.index(letter) >= 6 and german_alphabet.index(letter) < 12:
-                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 2,column=(german_alphabet.index(letter)-6), sticky=W)
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 2,column=(german_alphabet.index(letter)-6), sticky=W)
             elif german_alphabet.index(letter) >= 12 and german_alphabet.index(letter) < 18:
-                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 3,column=(german_alphabet.index(letter)-12), sticky=W)
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 3,column=(german_alphabet.index(letter)-12), sticky=W)
             elif german_alphabet.index(letter) >= 18  and german_alphabet.index(letter) < 24:
-                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 4,column=(german_alphabet.index(letter)-18), sticky=W)
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 4,column=(german_alphabet.index(letter)-18), sticky=W)
             elif german_alphabet.index(letter) >= 24:
-                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 5,column=(german_alphabet.index(letter)-24), sticky=W)
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 5,column=(german_alphabet.index(letter)-24), sticky=W)
     elif word_selected.split()[1][-2] in greek_alphabet:
-        for letter in greek_alphabet: # maybe this should go to start_game, so that alphabet can be selected by the letters in selected word
+        for letter in greek_alphabet:
             if greek_alphabet.index(letter) < 6:
-                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 1,column=greek_alphabet.index(letter), sticky=W)
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 1,column=greek_alphabet.index(letter), sticky=W)
             elif greek_alphabet.index(letter) >= 6 and greek_alphabet.index(letter) < 12:
-                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 2,column=(greek_alphabet.index(letter)-6), sticky=W)
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 2,column=(greek_alphabet.index(letter)-6), sticky=W)
             elif greek_alphabet.index(letter) >= 12 and greek_alphabet.index(letter) < 18:
-                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 3,column=(greek_alphabet.index(letter)-12), sticky=W)
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 3,column=(greek_alphabet.index(letter)-12), sticky=W)
             elif greek_alphabet.index(letter) >= 18  and greek_alphabet.index(letter) < 24:
-                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 4,column=(greek_alphabet.index(letter)-18), sticky=W)
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 4,column=(greek_alphabet.index(letter)-18), sticky=W)
             elif greek_alphabet.index(letter) >= 24:
-                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 5,column=(greek_alphabet.index(letter)-24), sticky=W)
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 5,column=(greek_alphabet.index(letter)-24), sticky=W)
     return word_selected, hidden_word, tkinter_hidden_word
 
+
+def play_round():
+    pass
 
 def play_game():
     pass
@@ -177,6 +207,7 @@ def open_game_frame():
     frame.pack_forget()
 
 
+
 #############################################################################################
 createFolder('.\\Hangman Excel')
 wb, ws = open_excel('.\\Hangman Excel\Hangman Excel.xlsx')
@@ -192,6 +223,7 @@ root.geometry('500x350')
 # root.iconbitmap('.\\hangman.ico')
 
 tkinter_hidden_word = StringVar()
+tkinter_letter_selected = StringVar()
 
 # background_image = PhotoImage(file='C:\\Users\\kj\\Documents\\Python Projects\\Comic downloader\\crowd-img.png')
 # background_label = Label(root, image=background_image)
