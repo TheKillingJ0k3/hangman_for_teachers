@@ -126,11 +126,15 @@ def function():
 
 def open_game_frame():
     game_frame.pack_forget()
+    hangman_frame.pack_forget()
     word_frame.pack_forget()
-    game_frame.pack(fill='both', expand=1)
-    redbutton = Button(game_frame, text="Red", fg="red")
-    redbutton.pack(side = LEFT)
-    word_frame.pack(side = LEFT)
+    letter_frame.pack_forget()
+    game_frame.pack(side=LEFT, fill='both', expand=1) #  fill='both', expand=1
+    hangman_frame.pack(side=TOP)
+    word_frame.pack(side=BOTTOM) # 
+    # redbutton = Button(game_frame, text="Red", fg="red")
+    # redbutton.pack(side = LEFT)
+    letter_frame.pack(side=RIGHT)
     # Label(word_frame, textvariable=hidden_word).pack()
     frame.pack_forget()
 
@@ -158,8 +162,11 @@ tkinter_hidden_word = StringVar()
 frame = Frame(root, borderwidth=5, relief="sunken", width=500, height=500) # 100 -200
 frame.pack()
 
-game_frame = Frame(root, borderwidth=5, relief="sunken", width=500, height=500, bg='pink') # 100 -200
-word_frame = Frame(root, borderwidth=5, width=200, height=50) # 100 -200
+game_frame = Frame(root, borderwidth=5, relief="sunken", width=350, height=350, bg='pink') # 100 -200
+hangman_frame = Frame(game_frame, borderwidth=5, relief="sunken", width=350, height=300) # 100 -200
+word_frame = Frame(game_frame, borderwidth=5, relief="sunken", width=350, height=150) # 100 -200
+letter_frame = Frame(root, borderwidth=5, relief="sunken", width=150, height=350, bg='yellow') # 100 -200
+
 ##############################   MENU  #############################################
 menubar = Menu(root) #creates menubar
 root.config(menu = menubar) #same as frame['menu'] = menubar, doesn't need menu=menu_file etc inside cascade
