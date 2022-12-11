@@ -14,8 +14,9 @@ import os, shutil
 # last_name_initial_var = ''
 number_of_letters = ''
 attempts = ''
-english_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'ä', 'ö', 'ü', 'ß']
-greek_aphabet = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω']
+english_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+german_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'ä', 'ö', 'ü', 'ß']
+greek_alphabet = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω']
 levels_to_columns = {'A1':'1',
                     'A2':'2',
                     'B1':'3',
@@ -89,6 +90,31 @@ def start_game(level):
     tkinter_hidden_word.set(hidden_word)
     print(tkinter_hidden_word)
     Label(word_frame, textvariable=tkinter_hidden_word).pack(side = LEFT, anchor=W)
+
+    if word_selected.split()[1][-2] in german_alphabet:
+        for letter in german_alphabet: # maybe this should go to start_game, so that alphabet can be selected by the letters in selected word
+            if german_alphabet.index(letter) < 6:
+                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 1,column=german_alphabet.index(letter), sticky=W)
+            elif german_alphabet.index(letter) >= 6 and german_alphabet.index(letter) < 12:
+                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 2,column=(german_alphabet.index(letter)-6), sticky=W)
+            elif german_alphabet.index(letter) >= 12 and german_alphabet.index(letter) < 18:
+                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 3,column=(german_alphabet.index(letter)-12), sticky=W)
+            elif german_alphabet.index(letter) >= 18  and german_alphabet.index(letter) < 24:
+                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 4,column=(german_alphabet.index(letter)-18), sticky=W)
+            elif german_alphabet.index(letter) >= 24:
+                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 5,column=(german_alphabet.index(letter)-24), sticky=W)
+    elif word_selected.split()[1][-2] in greek_alphabet:
+        for letter in greek_alphabet: # maybe this should go to start_game, so that alphabet can be selected by the letters in selected word
+            if greek_alphabet.index(letter) < 6:
+                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 1,column=greek_alphabet.index(letter), sticky=W)
+            elif greek_alphabet.index(letter) >= 6 and greek_alphabet.index(letter) < 12:
+                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 2,column=(greek_alphabet.index(letter)-6), sticky=W)
+            elif greek_alphabet.index(letter) >= 12 and greek_alphabet.index(letter) < 18:
+                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 3,column=(greek_alphabet.index(letter)-12), sticky=W)
+            elif greek_alphabet.index(letter) >= 18  and greek_alphabet.index(letter) < 24:
+                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 4,column=(greek_alphabet.index(letter)-18), sticky=W)
+            elif greek_alphabet.index(letter) >= 24:
+                ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 5,column=(greek_alphabet.index(letter)-24), sticky=W)
     return word_selected, hidden_word, tkinter_hidden_word
 
 
@@ -136,18 +162,17 @@ def open_game_frame():
     # redbutton.pack(side = LEFT)
     letter_frame.pack(side=RIGHT)
     
-    for letter in english_alphabet: # maybe this should go to start_game, so that alphabet can be selected by the letters in selected word
-        if english_alphabet.index(letter) < 6:
-            ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 1,column=english_alphabet.index(letter), sticky=W)
-        elif english_alphabet.index(letter) >= 6 and english_alphabet.index(letter) < 12:
-            ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 2,column=(english_alphabet.index(letter)-6), sticky=W)
-        elif english_alphabet.index(letter) >= 12 and english_alphabet.index(letter) < 18:
-            ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 3,column=(english_alphabet.index(letter)-12), sticky=W)
-        elif english_alphabet.index(letter) >= 18  and english_alphabet.index(letter) < 24:
-            ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 4,column=(english_alphabet.index(letter)-18), sticky=W)
-        elif english_alphabet.index(letter) >= 24:
-            ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 5,column=(english_alphabet.index(letter)-24), sticky=W)
-    
+    # for letter in english_alphabet: # maybe this should go to start_game, so that alphabet can be selected by the letters in selected word
+    #     if english_alphabet.index(letter) < 6:
+    #         ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 1,column=english_alphabet.index(letter), sticky=W)
+    #     elif english_alphabet.index(letter) >= 6 and english_alphabet.index(letter) < 12:
+    #         ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 2,column=(english_alphabet.index(letter)-6), sticky=W)
+    #     elif english_alphabet.index(letter) >= 12 and english_alphabet.index(letter) < 18:
+    #         ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 3,column=(english_alphabet.index(letter)-12), sticky=W)
+    #     elif english_alphabet.index(letter) >= 18  and english_alphabet.index(letter) < 24:
+    #         ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 4,column=(english_alphabet.index(letter)-18), sticky=W)
+    #     elif english_alphabet.index(letter) >= 24:
+    #         ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 5,column=(english_alphabet.index(letter)-24), sticky=W)
     # Label(word_frame, textvariable=hidden_word).pack()
     frame.pack_forget()
 
