@@ -14,7 +14,7 @@ import os, shutil
 # last_name_initial_var = ''
 number_of_letters = ''
 attempts = ''
-english_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+english_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'ä', 'ö', 'ü', 'ß']
 greek_aphabet = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω']
 levels_to_columns = {'A1':'1',
                     'A2':'2',
@@ -135,6 +135,19 @@ def open_game_frame():
     # redbutton = Button(game_frame, text="Red", fg="red")
     # redbutton.pack(side = LEFT)
     letter_frame.pack(side=RIGHT)
+    
+    for letter in english_alphabet: # maybe this should go to start_game, so that alphabet can be selected by the letters in selected word
+        if english_alphabet.index(letter) < 6:
+            ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 1,column=english_alphabet.index(letter), sticky=W)
+        elif english_alphabet.index(letter) >= 6 and english_alphabet.index(letter) < 12:
+            ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 2,column=(english_alphabet.index(letter)-6), sticky=W)
+        elif english_alphabet.index(letter) >= 12 and english_alphabet.index(letter) < 18:
+            ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 3,column=(english_alphabet.index(letter)-12), sticky=W)
+        elif english_alphabet.index(letter) >= 18  and english_alphabet.index(letter) < 24:
+            ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 4,column=(english_alphabet.index(letter)-18), sticky=W)
+        elif english_alphabet.index(letter) >= 24:
+            ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 5,column=(english_alphabet.index(letter)-24), sticky=W)
+    
     # Label(word_frame, textvariable=hidden_word).pack()
     frame.pack_forget()
 
