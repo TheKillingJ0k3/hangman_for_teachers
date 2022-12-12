@@ -6,9 +6,11 @@ Hangman game for teachers with difficulties according to level of learning with 
 ## New Game Menu
 <img width="372" alt="new game screenshot" src="https://user-images.githubusercontent.com/25702508/206854961-c8c97010-f71c-4ab8-b7d5-c83acdc1b952.png">'
 
-<img width="377" alt="new game" src="https://user-images.githubusercontent.com/25702508/206926130-e4dc1a5c-473f-43c7-93cb-24621ce0dd9c.PNG">
+<img width="377" alt="attempts counter" src="https://user-images.githubusercontent.com/25702508/207097405-861121a0-5b86-4e22-99c9-75220712b280.PNG">
 
-<img width="371" alt="win" src="https://user-images.githubusercontent.com/25702508/206926156-0f897367-adbd-461f-b1e5-3c7bf3ef59a6.PNG">
+<img width="377" alt="congratulations" src="https://user-images.githubusercontent.com/25702508/207097500-ae556f26-764f-4bd4-80d0-0a88939d5085.PNG">
+
+<img width="376" alt="game over" src="https://user-images.githubusercontent.com/25702508/207097582-1751e3a7-4e68-41fe-a4c6-44c80f8cc81a.PNG">
 
 ## Settings Menu
 <img width="376" alt="settings" src="https://user-images.githubusercontent.com/25702508/206855130-49b24b92-9c9d-49df-ad53-e38a3bed8577.png">

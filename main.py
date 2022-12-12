@@ -18,6 +18,7 @@ tkinter_letter_selected = ''
 tkinter_hidden_word = ''
 number_of_letters = ''
 attempts = ''
+tkinter_attempts = ''
 english_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 german_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'ä', 'ö', 'ü', 'ß']
 greek_alphabet = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω']
@@ -82,6 +83,8 @@ def show_words():
     os.startfile(r".\\Hangman Excel\\Hangman Excel.xlsx") # , data_only=True in case file has a lot of formulas
 
 def select_letter(letter):
+    global attempts
+    global tkinter_attempts
     global tkinter_letter_selected
     global word_selected
     global hidden_word
@@ -106,9 +109,14 @@ def select_letter(letter):
         # print(hidden_word)
     else:
         print("Try again!")
-    print(word_selected.split())
-    print(hidden_word.split())
-    if ''.join(word_selected.split()) == ''.join(hidden_word.split()):
+        attempts = attempts -1
+        print(attempts)
+        tkinter_attempts.set('attempts: ' + str(attempts))
+        if attempts == 0 :
+            messagebox.showinfo(title='Fail!', message='GAME OVER')
+    # print(word_selected.split())
+    # print(hidden_word.split())
+    if ''.join(word_selected.split()) == ''.join(hidden_word.split()) and attempts > 0 :
         print('Congratulations!')
         messagebox.showinfo(title='Success!', message='Congratulations!')
     else:
@@ -122,6 +130,7 @@ def start_game(level):
     global word_selected
     global hidden_word
     global tkinter_hidden_word
+    global tkinter_attempts
     word_selected = None
     while word_selected == None:
         word_selected = ws.cell(row=(randint(2, ws.max_row)), column=int(levels_to_columns[level])).value
@@ -156,6 +165,8 @@ def start_game(level):
                 ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 4,column=(greek_alphabet.index(letter)-18), sticky=W)
             elif greek_alphabet.index(letter) >= 24:
                 ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 5,column=(greek_alphabet.index(letter)-24), sticky=W)
+    # attempt_frame.pack(side = BOTTOM)
+    Label(attempt_frame, textvariable=tkinter_attempts).pack(side = LEFT, anchor=SE)
     return word_selected, hidden_word, tkinter_hidden_word
 
 
@@ -167,27 +178,57 @@ def play_game():
 
 
 def start_level_A1():
+    global attempts
+    global tkinter_attempts
     level_selected = 'A1'
+    attempts = 5
+    tkinter_attempts.set('attempts: ' + (str(attempts)))
+    print('attempts:' + attempts)
     start_game(level_selected)
 
 def start_level_A2():
+    global attempts
+    global tkinter_attempts
     level_selected = 'A2'
+    attempts = 5
+    tkinter_attempts.set('attempts: ' + (str(attempts)))
+    print('attempts:' + attempts)
     start_game(level_selected)
 
 def start_level_B1():
+    global attempts
+    global tkinter_attempts
     level_selected = 'B1'
+    attempts = 10
+    tkinter_attempts.set('attempts: ' + (str(attempts)))
+    print('attempts:' + attempts)
     start_game(level_selected)
 
 def start_level_B2():
+    global attempts
+    global tkinter_attempts
     level_selected = 'B2'
+    attempts = 10
+    tkinter_attempts.set('attempts: ' + (str(attempts)))
+    print('attempts:' + attempts)
     start_game(level_selected)
 
 def start_level_C1():
+    global attempts
+    global tkinter_attempts
     level_selected = 'C1'
+    attempts = 15
+    tkinter_attempts.set('attempts: ' + (str(attempts)))
+    print('attempts:' + attempts)
     start_game(level_selected)
 
 def start_level_C2():
+    global attempts
+    global tkinter_attempts
     level_selected = 'C2'
+    attempts = 15
+    tkinter_attempts.set('attempts: ' + (str(attempts)))
+    print('attempts:' + str(attempts))
     start_game(level_selected)
 
 
@@ -198,25 +239,28 @@ def open_game_frame():
     game_frame.pack_forget()
     hangman_frame.pack_forget()
     word_frame.pack_forget()
+    letter_attempts_frame.pack_forget()
     letter_frame.pack_forget()
+    attempt_frame.pack_forget()
     game_frame.pack(side=LEFT, fill='both', expand=1) #  fill='both', expand=1
     hangman_frame.pack(side=TOP)
-    word_frame.pack(side=BOTTOM) # 
+    word_frame.pack(side=BOTTOM) 
     # redbutton = Button(game_frame, text="Red", fg="red")
     # redbutton.pack(side = LEFT)
-    letter_frame.pack(side=RIGHT)
-    
+    letter_attempts_frame.pack(side=RIGHT)
+    letter_frame.pack(side=TOP)
+    attempt_frame.pack(side=BOTTOM)
     # for letter in english_alphabet: # maybe this should go to start_game, so that alphabet can be selected by the letters in selected word
     #     if english_alphabet.index(letter) < 6:
-    #         ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 1,column=english_alphabet.index(letter), sticky=W)
+    #         ttk.Button(letter_attempts_frame, text=str(letter), width=2).grid(row= 1,column=english_alphabet.index(letter), sticky=W)
     #     elif english_alphabet.index(letter) >= 6 and english_alphabet.index(letter) < 12:
-    #         ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 2,column=(english_alphabet.index(letter)-6), sticky=W)
+    #         ttk.Button(letter_attempts_frame, text=str(letter), width=2).grid(row= 2,column=(english_alphabet.index(letter)-6), sticky=W)
     #     elif english_alphabet.index(letter) >= 12 and english_alphabet.index(letter) < 18:
-    #         ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 3,column=(english_alphabet.index(letter)-12), sticky=W)
+    #         ttk.Button(letter_attempts_frame, text=str(letter), width=2).grid(row= 3,column=(english_alphabet.index(letter)-12), sticky=W)
     #     elif english_alphabet.index(letter) >= 18  and english_alphabet.index(letter) < 24:
-    #         ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 4,column=(english_alphabet.index(letter)-18), sticky=W)
+    #         ttk.Button(letter_attempts_frame, text=str(letter), width=2).grid(row= 4,column=(english_alphabet.index(letter)-18), sticky=W)
     #     elif english_alphabet.index(letter) >= 24:
-    #         ttk.Button(letter_frame, text=str(letter), width=2).grid(row= 5,column=(english_alphabet.index(letter)-24), sticky=W)
+    #         ttk.Button(letter_attempts_frame, text=str(letter), width=2).grid(row= 5,column=(english_alphabet.index(letter)-24), sticky=W)
     # Label(word_frame, textvariable=hidden_word).pack()
     frame.pack_forget()
 
@@ -238,6 +282,7 @@ root.geometry('500x350')
 
 tkinter_hidden_word = StringVar()
 tkinter_letter_selected = StringVar()
+tkinter_attempts = StringVar()
 
 # background_image = PhotoImage(file='C:\\Users\\kj\\Documents\\Python Projects\\Comic downloader\\crowd-img.png')
 # background_label = Label(root, image=background_image)
@@ -246,10 +291,12 @@ tkinter_letter_selected = StringVar()
 frame = Frame(root, borderwidth=5, relief="sunken", width=500, height=500) # 100 -200
 frame.pack()
 
-game_frame = Frame(root, borderwidth=5, relief="sunken", width=350, height=350, bg='pink') # 100 -200
-hangman_frame = Frame(game_frame, borderwidth=5, relief="sunken", width=350, height=300) # 100 -200
-word_frame = Frame(game_frame, borderwidth=5, relief="sunken", width=350, height=150) # 100 -200
-letter_frame = Frame(root, borderwidth=5, relief="sunken", width=150, height=350, bg='yellow') # 100 -200
+game_frame = Frame(root, borderwidth=3, relief="sunken", width=350, height=350, bg='pink') # 100 -200
+hangman_frame = Frame(game_frame, borderwidth=3, relief="sunken", width=350, height=300) # 100 -200
+word_frame = Frame(game_frame, borderwidth=3, relief="sunken", width=350, height=150) # 100 -200
+letter_attempts_frame = Frame(root, borderwidth=2, relief="sunken", width=150, height=350, bg='yellow') # 100 -200
+letter_frame = Frame(letter_attempts_frame, borderwidth=2, relief="sunken", width=150, height=320, bg='yellow') # 100 -200
+attempt_frame = Frame(letter_attempts_frame, borderwidth=2, relief="sunken", width=150, height=30, bg='red') # 100 -200
 
 ##############################   MENU  #############################################
 menubar = Menu(root) #creates menubar
@@ -274,7 +321,7 @@ action_menu.add_cascade(label='Choose Level', menu=level_menu) #creates name of 
 
 settings_menu = Menu(menubar, tearoff=False)
 menubar.add_cascade(label='Settings', menu=settings_menu) #creates name of new submenu
-settings_menu.add_command(label='Show Saved Words', command=show_words) #  main update_itineraries
+settings_menu.add_command(label='Show Saved Words', command=show_words)
 settings_menu.add_command(label='Add Words', command=show_words) #creates name of new submenu
 # word_settings_menu = Menu(settings_menu, tearoff=False)
 # word_settings_menu.add_command(label='A1', command=show_words) #adds option to submenu
