@@ -30,9 +30,8 @@ levels_to_columns = {'A1':'1',
                     }
 
 #####################################################
-# TODO: play game function: display hangman
+# TODO: play game function: update hangman
 # TODO: one tab for each language
-# TODO: new game bugs GUI - board is not cleared correctly
 
 ##################################  FUNCTIONS  ##################################################
 
@@ -130,6 +129,10 @@ def start_game(level):
 def start_level_A1():
     global attempts
     global tkinter_attempts
+    for ele in word_frame.winfo_children():
+        ele.pack_forget()
+    for ele in attempt_frame.winfo_children():
+        ele.pack_forget()
     level_selected = 'A1'
     attempts = 5
     tkinter_attempts.set('attempts: ' + (str(attempts)))
@@ -138,6 +141,10 @@ def start_level_A1():
 def start_level_A2():
     global attempts
     global tkinter_attempts
+    for ele in word_frame.winfo_children():
+        ele.pack_forget()
+    for ele in attempt_frame.winfo_children():
+        ele.pack_forget()
     level_selected = 'A2'
     attempts = 5
     tkinter_attempts.set('attempts: ' + (str(attempts)))
@@ -146,6 +153,10 @@ def start_level_A2():
 def start_level_B1():
     global attempts
     global tkinter_attempts
+    for ele in word_frame.winfo_children():
+        ele.pack_forget()
+    for ele in attempt_frame.winfo_children():
+        ele.pack_forget()
     level_selected = 'B1'
     attempts = 10
     tkinter_attempts.set('attempts: ' + (str(attempts)))
@@ -154,6 +165,10 @@ def start_level_B1():
 def start_level_B2():
     global attempts
     global tkinter_attempts
+    for ele in word_frame.winfo_children():
+        ele.pack_forget()
+    for ele in attempt_frame.winfo_children():
+        ele.pack_forget()
     level_selected = 'B2'
     attempts = 10
     tkinter_attempts.set('attempts: ' + (str(attempts)))
@@ -162,6 +177,10 @@ def start_level_B2():
 def start_level_C1():
     global attempts
     global tkinter_attempts
+    for ele in word_frame.winfo_children():
+        ele.pack_forget()
+    for ele in attempt_frame.winfo_children():
+        ele.pack_forget()
     level_selected = 'C1'
     attempts = 15
     tkinter_attempts.set('attempts: ' + (str(attempts)))
@@ -170,6 +189,10 @@ def start_level_C1():
 def start_level_C2():
     global attempts
     global tkinter_attempts
+    for ele in word_frame.winfo_children():
+        ele.pack_forget()
+    for ele in attempt_frame.winfo_children():
+        ele.pack_forget()
     level_selected = 'C2'
     attempts = 15
     tkinter_attempts.set('attempts: ' + (str(attempts)))
@@ -215,8 +238,10 @@ def select_letter(letter): # play round
     if ''.join(word_selected.split()) == ''.join(hidden_word.split()) and attempts > 0 :
         print('Congratulations!')
         messagebox.showinfo(title='Success!', message='Congratulations!')
-    else:
+    elif ''.join(word_selected.split()) != ''.join(hidden_word.split()) and attempts > 0 :
         print('One more!')
+    else:
+        messagebox.showinfo(title='Dude, stop!', message='How about playing a new game instead?')
     # return tkinter_letter_selected, tkinter_hidden_word, word_selected, hidden_word
 
 
