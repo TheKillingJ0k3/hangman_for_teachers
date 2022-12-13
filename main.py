@@ -7,11 +7,10 @@ import openpyxl
 from openpyxl.styles import Font, Border, Side
 from random import randint
 import os, shutil
+from PIL import ImageTk, Image
 
 
 #GLOBAL VARIABLES
-# var = ''
-# last_name_initial_var = ''
 word_selected = ''
 hidden_word = ''
 tkinter_letter_selected = ''
@@ -31,7 +30,7 @@ levels_to_columns = {'A1':'1',
                     }
 
 #####################################################
-# TODO: play game function: display hangman - if letter correct, adds it to the word, if not burns an attempt 
+# TODO: play game function: display hangman
 # TODO: one tab for each language
 # TODO: new game bugs GUI - board is not cleared correctly
 
@@ -55,7 +54,7 @@ def excel_styles(excel_sheet):
     excel_sheet.freeze_panes = 'A2'
 ############################################
 
-def open_excel(excel_file_path):
+def open_excel(excel_file_path): # creates excel the first time the game runs
     try:
         wb = openpyxl.load_workbook(excel_file_path, data_only=True) # , data_only=True in case file has a lot of formulas
         ws = wb.active
@@ -82,7 +81,102 @@ def open_excel(excel_file_path):
 def show_words():
     os.startfile(r".\\Hangman Excel\\Hangman Excel.xlsx") # , data_only=True in case file has a lot of formulas
 
-def select_letter(letter):
+
+def start_game(level):
+    open_game_frame()
+    # Label.destroy()
+    global word_selected
+    global hidden_word
+    global tkinter_hidden_word
+    global tkinter_attempts
+    word_selected = None
+    while word_selected == None:
+        word_selected = ws.cell(row=(randint(2, ws.max_row)), column=int(levels_to_columns[level])).value
+    # print(word_selected)
+    hidden_word = word_selected.split()[1]
+    hidden_word = word_selected.split()[0] + ' ' + word_selected.split()[1][0] + ' ' + (len(hidden_word)-2)*'_ ' + word_selected.split()[1][-1]
+    print(hidden_word)
+    tkinter_hidden_word.set(hidden_word)
+    Label(word_frame, textvariable=tkinter_hidden_word).pack(side = LEFT, anchor=W)
+    
+    if word_selected.split()[1][-2] in german_alphabet:
+        for letter in german_alphabet:
+            if german_alphabet.index(letter) < 6:
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 1,column=german_alphabet.index(letter), sticky=W)
+            elif german_alphabet.index(letter) >= 6 and german_alphabet.index(letter) < 12:
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 2,column=(german_alphabet.index(letter)-6), sticky=W)
+            elif german_alphabet.index(letter) >= 12 and german_alphabet.index(letter) < 18:
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 3,column=(german_alphabet.index(letter)-12), sticky=W)
+            elif german_alphabet.index(letter) >= 18  and german_alphabet.index(letter) < 24:
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 4,column=(german_alphabet.index(letter)-18), sticky=W)
+            elif german_alphabet.index(letter) >= 24:
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 5,column=(german_alphabet.index(letter)-24), sticky=W)
+    elif word_selected.split()[1][-2] in greek_alphabet:
+        for letter in greek_alphabet:
+            if greek_alphabet.index(letter) < 6:
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 1,column=greek_alphabet.index(letter), sticky=W)
+            elif greek_alphabet.index(letter) >= 6 and greek_alphabet.index(letter) < 12:
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 2,column=(greek_alphabet.index(letter)-6), sticky=W)
+            elif greek_alphabet.index(letter) >= 12 and greek_alphabet.index(letter) < 18:
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 3,column=(greek_alphabet.index(letter)-12), sticky=W)
+            elif greek_alphabet.index(letter) >= 18  and greek_alphabet.index(letter) < 24:
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 4,column=(greek_alphabet.index(letter)-18), sticky=W)
+            elif greek_alphabet.index(letter) >= 24:
+                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 5,column=(greek_alphabet.index(letter)-24), sticky=W)
+    Label(attempt_frame, textvariable=tkinter_attempts).pack(side = LEFT, anchor=SE)
+    return word_selected, hidden_word, tkinter_hidden_word
+
+######################################################
+def start_level_A1():
+    global attempts
+    global tkinter_attempts
+    level_selected = 'A1'
+    attempts = 5
+    tkinter_attempts.set('attempts: ' + (str(attempts)))
+    start_game(level_selected)
+
+def start_level_A2():
+    global attempts
+    global tkinter_attempts
+    level_selected = 'A2'
+    attempts = 5
+    tkinter_attempts.set('attempts: ' + (str(attempts)))
+    start_game(level_selected)
+
+def start_level_B1():
+    global attempts
+    global tkinter_attempts
+    level_selected = 'B1'
+    attempts = 10
+    tkinter_attempts.set('attempts: ' + (str(attempts)))
+    start_game(level_selected)
+
+def start_level_B2():
+    global attempts
+    global tkinter_attempts
+    level_selected = 'B2'
+    attempts = 10
+    tkinter_attempts.set('attempts: ' + (str(attempts)))
+    start_game(level_selected)
+
+def start_level_C1():
+    global attempts
+    global tkinter_attempts
+    level_selected = 'C1'
+    attempts = 15
+    tkinter_attempts.set('attempts: ' + (str(attempts)))
+    start_game(level_selected)
+
+def start_level_C2():
+    global attempts
+    global tkinter_attempts
+    level_selected = 'C2'
+    attempts = 15
+    tkinter_attempts.set('attempts: ' + (str(attempts)))
+    start_game(level_selected)
+######################################################
+
+def select_letter(letter): # play round
     global attempts
     global tkinter_attempts
     global tkinter_letter_selected
@@ -107,6 +201,8 @@ def select_letter(letter):
         tkinter_letter_selected = ''
         # print(word_selected)
         # print(hidden_word)
+        #disable button
+        ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter))['state'] = DISABLED # not working
     else:
         print("Try again!")
         attempts = attempts -1
@@ -124,116 +220,10 @@ def select_letter(letter):
     # return tkinter_letter_selected, tkinter_hidden_word, word_selected, hidden_word
 
 
-def start_game(level):
-    open_game_frame()
-    # Label.destroy()
-    global word_selected
-    global hidden_word
-    global tkinter_hidden_word
-    global tkinter_attempts
-    word_selected = None
-    while word_selected == None:
-        word_selected = ws.cell(row=(randint(2, ws.max_row)), column=int(levels_to_columns[level])).value
-    # print(word_selected)
-    hidden_word = word_selected.split()[1]
-    hidden_word = word_selected.split()[0] + ' ' + word_selected.split()[1][0] + ' ' + (len(hidden_word)-2)*'_ ' + word_selected.split()[1][-1]
-    print(hidden_word)
-    tkinter_hidden_word.set(hidden_word)
-    Label(word_frame, textvariable=tkinter_hidden_word).pack(side = LEFT, anchor=W)
-
-    if word_selected.split()[1][-2] in german_alphabet:
-        for letter in german_alphabet: # maybe this should go to start_game, so that alphabet can be selected by the letters in selected word
-            if german_alphabet.index(letter) < 6:
-                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 1,column=german_alphabet.index(letter), sticky=W)
-            elif german_alphabet.index(letter) >= 6 and german_alphabet.index(letter) < 12:
-                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 2,column=(german_alphabet.index(letter)-6), sticky=W)
-            elif german_alphabet.index(letter) >= 12 and german_alphabet.index(letter) < 18:
-                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 3,column=(german_alphabet.index(letter)-12), sticky=W)
-            elif german_alphabet.index(letter) >= 18  and german_alphabet.index(letter) < 24:
-                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 4,column=(german_alphabet.index(letter)-18), sticky=W)
-            elif german_alphabet.index(letter) >= 24:
-                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 5,column=(german_alphabet.index(letter)-24), sticky=W)
-    elif word_selected.split()[1][-2] in greek_alphabet:
-        for letter in greek_alphabet:
-            if greek_alphabet.index(letter) < 6:
-                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 1,column=greek_alphabet.index(letter), sticky=W)
-            elif greek_alphabet.index(letter) >= 6 and greek_alphabet.index(letter) < 12:
-                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 2,column=(greek_alphabet.index(letter)-6), sticky=W)
-            elif greek_alphabet.index(letter) >= 12 and greek_alphabet.index(letter) < 18:
-                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 3,column=(greek_alphabet.index(letter)-12), sticky=W)
-            elif greek_alphabet.index(letter) >= 18  and greek_alphabet.index(letter) < 24:
-                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 4,column=(greek_alphabet.index(letter)-18), sticky=W)
-            elif greek_alphabet.index(letter) >= 24:
-                ttk.Button(letter_frame, text=str(letter), width=2, command = lambda letter=letter: select_letter(letter)).grid(row= 5,column=(greek_alphabet.index(letter)-24), sticky=W)
-    # attempt_frame.pack(side = BOTTOM)
-    Label(attempt_frame, textvariable=tkinter_attempts).pack(side = LEFT, anchor=SE)
-    return word_selected, hidden_word, tkinter_hidden_word
-
-
-def play_round():
+def function(): # blank function for buttons not used
     pass
 
-def play_game():
-    pass
-
-
-def start_level_A1():
-    global attempts
-    global tkinter_attempts
-    level_selected = 'A1'
-    attempts = 5
-    tkinter_attempts.set('attempts: ' + (str(attempts)))
-    print('attempts:' + attempts)
-    start_game(level_selected)
-
-def start_level_A2():
-    global attempts
-    global tkinter_attempts
-    level_selected = 'A2'
-    attempts = 5
-    tkinter_attempts.set('attempts: ' + (str(attempts)))
-    print('attempts:' + attempts)
-    start_game(level_selected)
-
-def start_level_B1():
-    global attempts
-    global tkinter_attempts
-    level_selected = 'B1'
-    attempts = 10
-    tkinter_attempts.set('attempts: ' + (str(attempts)))
-    print('attempts:' + attempts)
-    start_game(level_selected)
-
-def start_level_B2():
-    global attempts
-    global tkinter_attempts
-    level_selected = 'B2'
-    attempts = 10
-    tkinter_attempts.set('attempts: ' + (str(attempts)))
-    print('attempts:' + attempts)
-    start_game(level_selected)
-
-def start_level_C1():
-    global attempts
-    global tkinter_attempts
-    level_selected = 'C1'
-    attempts = 15
-    tkinter_attempts.set('attempts: ' + (str(attempts)))
-    print('attempts:' + attempts)
-    start_game(level_selected)
-
-def start_level_C2():
-    global attempts
-    global tkinter_attempts
-    level_selected = 'C2'
-    attempts = 15
-    tkinter_attempts.set('attempts: ' + (str(attempts)))
-    print('attempts:' + str(attempts))
-    start_game(level_selected)
-
-
-def function():
-    pass
+###################### GUI Functions ##############################
 
 def open_game_frame():
     game_frame.pack_forget()
@@ -244,33 +234,26 @@ def open_game_frame():
     attempt_frame.pack_forget()
     game_frame.pack(side=LEFT, fill='both', expand=1) #  fill='both', expand=1
     hangman_frame.pack(side=TOP)
-    word_frame.pack(side=BOTTOM) 
+    
+    original_image = Image.open(".\\hangman1.png")
+    original_image = original_image.resize((350,300), Image.Resampling.LANCZOS)
+    original_image = ImageTk.PhotoImage(original_image)
+    img = Label(hangman_frame, image = original_image)
+    img.image = original_image
+    img.place(x=0, y=0)
+    
+    word_frame.pack(side=BOTTOM)
     # redbutton = Button(game_frame, text="Red", fg="red")
     # redbutton.pack(side = LEFT)
     letter_attempts_frame.pack(side=RIGHT)
     letter_frame.pack(side=TOP)
     attempt_frame.pack(side=BOTTOM)
-    # for letter in english_alphabet: # maybe this should go to start_game, so that alphabet can be selected by the letters in selected word
-    #     if english_alphabet.index(letter) < 6:
-    #         ttk.Button(letter_attempts_frame, text=str(letter), width=2).grid(row= 1,column=english_alphabet.index(letter), sticky=W)
-    #     elif english_alphabet.index(letter) >= 6 and english_alphabet.index(letter) < 12:
-    #         ttk.Button(letter_attempts_frame, text=str(letter), width=2).grid(row= 2,column=(english_alphabet.index(letter)-6), sticky=W)
-    #     elif english_alphabet.index(letter) >= 12 and english_alphabet.index(letter) < 18:
-    #         ttk.Button(letter_attempts_frame, text=str(letter), width=2).grid(row= 3,column=(english_alphabet.index(letter)-12), sticky=W)
-    #     elif english_alphabet.index(letter) >= 18  and english_alphabet.index(letter) < 24:
-    #         ttk.Button(letter_attempts_frame, text=str(letter), width=2).grid(row= 4,column=(english_alphabet.index(letter)-18), sticky=W)
-    #     elif english_alphabet.index(letter) >= 24:
-    #         ttk.Button(letter_attempts_frame, text=str(letter), width=2).grid(row= 5,column=(english_alphabet.index(letter)-24), sticky=W)
-    # Label(word_frame, textvariable=hidden_word).pack()
     frame.pack_forget()
 
-
-
 #############################################################################################
+
 createFolder('.\\Hangman Excel')
 wb, ws = open_excel('.\\Hangman Excel\Hangman Excel.xlsx')
-
-
 
 ###################### main GUI - Button creation #########################################
 root = Tk()
