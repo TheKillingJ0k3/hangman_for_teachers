@@ -17,6 +17,7 @@ tkinter_letter_selected = ''
 tkinter_hidden_word = ''
 number_of_letters = ''
 attempts = ''
+icon = 1
 tkinter_attempts = ''
 english_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 german_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'ä', 'ö', 'ü', 'ß']
@@ -30,7 +31,6 @@ levels_to_columns = {'A1':'1',
                     }
 
 #####################################################
-# TODO: play game function: update hangman
 # TODO: one tab for each language
 
 ##################################  FUNCTIONS  ##################################################
@@ -201,6 +201,7 @@ def start_level_C2():
 
 def select_letter(letter): # play round
     global attempts
+    global icon
     global tkinter_attempts
     global tkinter_letter_selected
     global word_selected
@@ -231,6 +232,14 @@ def select_letter(letter): # play round
         attempts = attempts -1
         print(attempts)
         tkinter_attempts.set('attempts: ' + str(attempts))
+        icon = icon + 1
+        if icon < 9 :
+            original_image = Image.open(".\\hangman{}.png".format(icon))
+            original_image = original_image.resize((350,300), Image.Resampling.LANCZOS)
+            original_image = ImageTk.PhotoImage(original_image)
+            img = Label(hangman_frame, image = original_image)
+            img.image = original_image
+            img.place(x=0, y=0)
         if attempts == 0 :
             messagebox.showinfo(title='Fail!', message='GAME OVER')
     # print(word_selected.split())
@@ -241,7 +250,12 @@ def select_letter(letter): # play round
     elif ''.join(word_selected.split()) != ''.join(hidden_word.split()) and attempts > 0 :
         print('One more!')
     else:
-        messagebox.showinfo(title='Dude, stop!', message='How about playing a new game instead?')
+        messagebox.showinfo(title='Dude, stop!', message='How about playing a new game instead?') # .geometry(f"dimension+{root.winfo_x()}+{root.winfo_y()}")
+        # root_x = root.winfo_rootx()
+        # root_y = root.winfo_rooty()
+        # win_x = root_x + 300
+        # win_y = root_y + 100
+        # win.geometry(f'+{win_x}+{win_y}')
     # return tkinter_letter_selected, tkinter_hidden_word, word_selected, hidden_word
 
 
@@ -268,8 +282,6 @@ def open_game_frame():
     img.place(x=0, y=0)
     
     word_frame.pack(side=BOTTOM)
-    # redbutton = Button(game_frame, text="Red", fg="red")
-    # redbutton.pack(side = LEFT)
     letter_attempts_frame.pack(side=RIGHT)
     letter_frame.pack(side=TOP)
     attempt_frame.pack(side=BOTTOM)
