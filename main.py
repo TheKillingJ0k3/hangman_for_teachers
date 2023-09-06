@@ -24,16 +24,16 @@ tkinter_attempts = ''
 english_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
                     'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 german_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                   'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'ä', 'ö', 'ü', 'ß']
+                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'ä', 'ö', 'ü', 'ß']
 greek_alphabet = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ',
-                  'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω']
+                'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω']
 levels_to_columns = {'A1': '1',
-                     'A2': '2',
-                     'B1': '3',
-                     'B2': '4',
-                     'C1': '5',
-                     'C2': '6'
-                     }
+                    'A2': '2',
+                    'B1': '3',
+                    'B2': '4',
+                    'C1': '5',
+                    'C2': '6'
+                    }
 
 #####################################################
 # TODO: one tab for each language
@@ -356,21 +356,21 @@ tkinter_attempts = StringVar()
 # background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
 frame = Frame(root, borderwidth=2, relief="sunken",
-              width=600, height=500)  # 100 -200
+            width=600, height=500)  # 100 -200
 frame.pack()
 
 game_frame = Frame(root, borderwidth=1, relief="sunken",
-                   width=350, height=350, bg='pink')  # 100 -200
+                width=350, height=350, bg='pink')  # 100 -200
 hangman_frame = Frame(game_frame, borderwidth=2,
-                      relief="sunken", width=350, height=300)  # 100 -200
+                    relief="sunken", width=350, height=300)  # 100 -200
 word_frame = Frame(game_frame, borderwidth=1, relief="sunken",
-                   width=350, height=150)  # 100 -200
+                width=350, height=150)  # 100 -200
 letter_attempts_frame = Frame(
     root, borderwidth=2, relief="sunken", width=150, height=350, bg='yellow')  # 100 -200
 letter_frame = Frame(letter_attempts_frame, borderwidth=1,
-                     relief="sunken", width=150, height=320)  # 100 -200 , bg='yellow'
+                    relief="sunken", width=150, height=320)  # 100 -200 , bg='yellow'
 attempt_frame = Frame(letter_attempts_frame, borderwidth=2,
-                      relief="sunken", width=150, height=30, bg='red')  # 100 -200
+                    relief="sunken", width=150, height=30, bg='red')  # 100 -200
 
 ##############################   MENU  #############################################
 menubar = Menu(root)  # creates menubar
