@@ -341,7 +341,7 @@ root.title('Hangman')
 root.geometry('600x350')
 # root.state('zoomed')
 # root.option_add('*tear0ff', False) #opens fullscreen
-# root.iconbitmap('.\\hangman.ico')
+root.iconbitmap('.\\hangman.ico')
 
 # ttk.Style().configure("TButton", padding=6, relief="flat",
 #    background="#ccc")
