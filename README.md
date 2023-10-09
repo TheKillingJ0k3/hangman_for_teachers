@@ -2,6 +2,7 @@
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
 Hangman game for teachers with difficulties according to level of learning with TKinter graphics.
+User goes to "Hangman Excel" folder and opens "Hangman Excel" file, then adds the desired words per level (A1 to C2) and saves the file. When selecting a level, the program will choose one random word from the pool of the same level.
 
 ## New Game Menu
 <img width="372" alt="new game screenshot" src="https://user-images.githubusercontent.com/25702508/206854961-c8c97010-f71c-4ab8-b7d5-c83acdc1b952.png">'
