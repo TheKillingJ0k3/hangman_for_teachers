@@ -5,13 +5,11 @@ Hangman game for teachers with difficulties according to level of learning with 
 User goes to "Hangman Excel" folder and opens "Hangman Excel" file, then adds the desired words per level (A1 to C2) and saves the file. When selecting a level, the program will choose one random word from the pool of the same level.
 
 ## New Game Menu
-<img width="449" alt="test1" src="https://github.com/TheKillingJ0k3/hangman_for_teachers/assets/25702508/77a3a4c4-2dd5-4628-b20e-4f9c8c1e4a4b">
+<img width="449" alt="test1" src="https://github.com/TheKillingJ0k3/hangman_for_teachers/assets/25702508/77a3a4c4-2dd5-4628-b20e-4f9c8c1e4a4b">  
 
+<img width="449" alt="test2" src="https://github.com/TheKillingJ0k3/hangman_for_teachers/assets/25702508/49fd1a80-cfe5-47da-9581-b8d8484a8aa5">  
 
-<img width="449" alt="test2" src="https://github.com/TheKillingJ0k3/hangman_for_teachers/assets/25702508/49fd1a80-cfe5-47da-9581-b8d8484a8aa5">
-
-
-<img width="448" alt="test3" src="https://github.com/TheKillingJ0k3/hangman_for_teachers/assets/25702508/fb0cbeba-5110-4523-970a-b90978f96697">
+<img width="448" alt="test3" src="https://github.com/TheKillingJ0k3/hangman_for_teachers/assets/25702508/fb0cbeba-5110-4523-970a-b90978f96697">  
 
 
 ## Settings Menu
